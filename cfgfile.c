@@ -36,6 +36,8 @@ char * config_directives[] = {
 	"log-scale", 
 	"max-bandwidth",
 	"net-filter", 
+	"net-filter6", 
+        "link-local",
 	"port-display", 
 	NULL
 };
@@ -230,8 +232,15 @@ void config_set_string(const char *directive, const char* s) {
     stringmap S;
 
     S = stringmap_find(config, directive);
-    if (S) stringmap_delete_free(S);
-    stringmap_insert(config, directive, item_ptr(xstrdup(s)));
+    if (S) {
+        /* Replace any already stored string value.
+	 * The node can simply not be deleted straight off,
+	 * due to possible presence of leafs on either side. */
+        if (S->d.v)
+            xfree(S->d.v);
+        S->d.v = xstrdup(s);
+    } else
+        stringmap_insert(config, directive, item_ptr(xstrdup(s)));
 }
 
 int read_config(char *file, int whinge_on_error) {
