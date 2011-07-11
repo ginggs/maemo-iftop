@@ -9,9 +9,10 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,-z,defs
 
 override_dh_auto_clean:
 	dh_auto_clean config/config.guess config/config.sub
-
+	QUILT_PATCHES=debian/patches quilt pop -a -R || test $$? = 2
 
 override_dh_auto_configure:
+	QUILT_PATCHES=debian/patches quilt push -a || test $$? = 2
 	[ -r /usr/share/misc/config.guess ] && cp -f /usr/share/misc/config.guess config/config.guess
 	[ -r /usr/share/misc/config.sub ] && cp -f /usr/share/misc/config.sub config/config.sub
 	dh_auto_configure

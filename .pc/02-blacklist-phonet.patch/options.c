@@ -47,7 +47,6 @@ static char *bad_interface_names[] = {
             "dummy",
             "vmnet",
             "wmaster", /* wmaster0 is an internal-use interface for mac80211, a Linux WiFi API. */
-            "phonet",  /* phonet0 is Nokia's Phone Network Protocol for modem interfaces */
             NULL       /* last entry must be NULL */
         };
 
