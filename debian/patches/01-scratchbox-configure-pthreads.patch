@@ -1,7 +1,5 @@
-Index: iftop-1.0~pre2/configure
-===================================================================
---- iftop-1.0~pre2.orig/configure	2012-07-12 10:35:31.367042633 +0200
-+++ iftop-1.0~pre2/configure	2012-07-12 11:08:06.291368974 +0200
+--- a/configure
++++ b/configure
 @@ -7717,7 +7717,7 @@
  $as_echo "CFLAGS=$foundthrflag and LIBS=$foundthrlib" >&6; }
  { $as_echo "$as_me:$LINENO: checking POSIX threads usability" >&5

@@ -7717,7 +7717,7 @@ fi
 $as_echo "CFLAGS=$foundthrflag and LIBS=$foundthrlib" >&6; }
 { $as_echo "$as_me:$LINENO: checking POSIX threads usability" >&5
 $as_echo_n "checking POSIX threads usability... " >&6; }
-if test yes; then
+if test "$cross_compiling" = yes; then
   { $as_echo "$as_me:$LINENO: result: can't test because we are cross-compiling" >&5
 $as_echo "can't test because we are cross-compiling" >&6; }
 else
@@ -8458,8 +8458,7 @@ $debug ||
 if test -n "$CONFIG_FILES"; then
 
 
-ac_cr='
-'
+ac_cr=''
 ac_cs_awk_cr=`$AWK 'BEGIN { print "a\rb" }' </dev/null 2>/dev/null`
 if test "$ac_cs_awk_cr" = "a${ac_cr}b"; then
   ac_cs_awk_cr='\\r'
