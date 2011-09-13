@@ -1,3 +1,9 @@
+iftop (0.17-17maemo3) fremantle; urgency=low
+
+  * Skip checking POSIX threads usability in configure
+
+ -- Graham Inggs <graham@nerve.org.za>  Tues, 13 Sep 2011 22:50:00 +0200
+
 iftop (0.17-17maemo2) fremantle; urgency=low
 
   * Ugly hack in debian/rules for quilt
