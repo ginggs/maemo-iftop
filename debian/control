@@ -1,8 +1,9 @@
 Source: iftop
 Section: net
 Priority: optional
-Maintainer: Alexander Reichle-Schmehl <tolimar@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), quilt (>= 0.46-7~), autotools-dev, libncurses5-dev, libpcap0.8-dev
+Maintainer: Graham Inggs <graham@nerve.org.za>
+XSBC-Original-Maintainer: Alexander Reichle-Schmehl <tolimar@debian.org>
+Build-Depends: debhelper (>= 7.0.50~), quilt (>= 0.45-6~), autotools-dev, libncurses5-dev, libpcap0.8-dev
 Standards-Version: 3.8.3
 Homepage: http://www.ex-parrot.com/~pdw/iftop/
 Vcs-Svn: svn://svn.debian.org/collab-maint/deb-maint/iftop/trunk/
