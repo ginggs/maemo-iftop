@@ -2,9 +2,8 @@
 
 %:
 	mkdir -p Debian/Debhelper/Sequence/
-	cp /scratchbox/devkits/debian-squeeze/share/perl5/Dpkg/Source/Package/V3/quilt.pm Debian/Debhelper/Sequence/
+	cp /usr/share/perl5/Dpkg/Source/Package/V3/quilt.pm Debian/Debhelper/Sequence/
 	dh ${@} --with quilt
-	rm -rf Debian
 
 override_dh_auto_clean:
 	dh_auto_clean

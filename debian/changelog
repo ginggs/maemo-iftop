@@ -1,20 +1,27 @@
+iftop (0.17-17maemo4) fremantle; urgency=low
+
+  * Patch to prevent segfault when specifying gprs0 interface
+  * Added CLI icon, updated Section and Description
+
+ -- Graham Inggs <graham@nerve.org.za>  Tue, 20 Sep 2011 07:55:00 +0200
+
 iftop (0.17-17maemo3) fremantle; urgency=low
 
   * Skip checking POSIX threads usability in configure
 
- -- Graham Inggs <graham@nerve.org.za>  Tues, 13 Sep 2011 22:50:00 +0200
+ -- Graham Inggs <graham@nerve.org.za>  Tue, 13 Sep 2011 22:50:00 +0200
 
 iftop (0.17-17maemo2) fremantle; urgency=low
 
   * Ugly hack in debian/rules for quilt
 
- -- Graham Inggs <graham@nerve.org.za>  Tues, 13 Sep 2011 22:25:00 +0200
+ -- Graham Inggs <graham@nerve.org.za>  Tue, 13 Sep 2011 22:25:00 +0200
 
 iftop (0.17-17maemo1) fremantle; urgency=low
 
   * Packaged for Maemo
 
- -- Graham Inggs <graham@nerve.org.za>  Tues, 13 Sep 2011 20:30:00 +0200
+ -- Graham Inggs <graham@nerve.org.za>  Tue, 13 Sep 2011 20:30:00 +0200
 
 iftop (0.17-17) experimental; urgency=low
 
