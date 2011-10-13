@@ -1,3 +1,11 @@
+iftop (0.17-17maemo5) fremantle; urgency=low
+
+  * Check that default interface is up
+  * Blacklist wmaster interface
+  * Call quilt 0.45 correctly
+
+ -- Graham Inggs <graham@nerve.org.za>  Thu, 13 Oct 2011 08:20:00 +0200
+
 iftop (0.17-17maemo4) fremantle; urgency=low
 
   * Patch to prevent segfault when specifying gprs0 interface

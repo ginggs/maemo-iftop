@@ -4,3 +4,7 @@
 04-arm.patch
 05-bar-display.patch
 06-bar-bytes.patch
+07-maemo-configure-pthreads.patch
+08-skip-null-ifa_addr.patch
+09-check-if-up.patch
+10-blacklist-wmaster.patch
