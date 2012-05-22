@@ -1,35 +1,61 @@
-iftop (0.17-17maemo5) fremantle; urgency=low
+iftop (1.0~pre2-3) unstable; urgency=low
 
-  * Check that default interface is up
-  * Blacklist wmaster interface
-  * Call quilt 0.45 correctly
+  * Enable hardening buildflags in debian/rules (Closes: #675849)
 
- -- Graham Inggs <graham@nerve.org.za>  Thu, 13 Oct 2011 08:20:00 +0200
+ -- Alexander Reichle-Schmehl <tolimar@debian.org>  Tue, 22 May 2012 16:35:48 +0200
 
-iftop (0.17-17maemo4) fremantle; urgency=low
+iftop (1.0~pre2-2) unstable; urgency=low
 
-  * Patch to prevent segfault when specifying gprs0 interface
-  * Added CLI icon, updated Section and Description
+  * Bump standards to 3.9.3 (no changes needed)
+  * Upload to unstable
 
- -- Graham Inggs <graham@nerve.org.za>  Tue, 20 Sep 2011 07:55:00 +0200
+ -- Alexander Reichle-Schmehl <tolimar@debian.org>  Tue, 22 May 2012 14:37:21 +0200
 
-iftop (0.17-17maemo3) fremantle; urgency=low
+iftop (0.17-19) unstable; urgency=low
 
-  * Skip checking POSIX threads usability in configure
+  * Add debian/patches/12-allow-iface-with-emtpy-mac.patch which fixes a
+    segfault when called upon interfaces with emtpy MAC address
+    (Closes: #609540)
 
- -- Graham Inggs <graham@nerve.org.za>  Tue, 13 Sep 2011 22:50:00 +0200
+ -- Alexander Reichle-Schmehl <tolimar@debian.org>  Tue, 13 Dec 2011 16:05:19 +0100
 
-iftop (0.17-17maemo2) fremantle; urgency=low
+iftop (1.0~pre2-1) experimental; urgency=low
 
-  * Ugly hack in debian/rules for quilt
+  * New Upstream release
+    * Drop patches/01-manpage.patch (applied upstream)
+    * Drop patches/02-armeb.patch (applied upstream)
+    * Drop patches/03-frozen-order.patch (applied upstream)
+    * Drop patches/04-arm.patch (applied upstream)
+    * Drop patches/05-bar-display.patch (applied upstream)
+    * Drop patches/06-bar-bytes.patch (applied upstream)
+    * Drop patches/07-spelling-and-usage-text.patch (applied upstream)
+    * Drop patches/08-segfault-duplicate-options.patch (applied upstream)
+    * Drop patches/09-incomplete-hash-func.patch (applied upstream)
+    * Drop patches/10-lladdr-inclusion-kfreebsd.patch (applied upstream)
+    * Drop patches/11-implement-ipv6-support.patch (applied upstream)
+    * Fix package synopsis in --help (Closes: #439356)
+  * Deactivate quilt in debian/rules as no patches are left
+  * Fix usage of newer /usr/share/misc/config.{guess,sub} in debian/rules
+    (Closes: #535735)
 
- -- Graham Inggs <graham@nerve.org.za>  Tue, 13 Sep 2011 22:25:00 +0200
+ -- Alexander Reichle-Schmehl <tolimar@debian.org>  Mon, 17 Oct 2011 16:05:33 +0200
 
-iftop (0.17-17maemo1) fremantle; urgency=low
+iftop (0.17-18) unstable; urgency=low
 
-  * Packaged for Maemo
+  * Sepperate the changes from the previous upload into sepperate patches
+    * debian/patches/07-spelling-and-usage-text.patch
+    * debian/patches/08-segfault-duplicate-options.patch
+    * debian/patches/09-incomplete-hash-func.patch
+    * debian/patches/10-lladdr-inclusion-kfreebsd.patch
+    * debian/patches/11-implement-ipv6-support.patch
+  * Thanks again to Mats Erik Andersson for the work!
+  * Deactivate the (unexpected) subshell feature by building with
+    -DNO_SYSTEM
+  * Fix Vcs-Svn header in debian/control
+  * Fix typo of "feauture" in debian/NEWS
+  * Bump standards (No changes needed)
 
- -- Graham Inggs <graham@nerve.org.za>  Tue, 13 Sep 2011 20:30:00 +0200
+ -- Alexander Reichle-Schmehl <tolimar@debian.org>  Mon, 17 Oct 2011 12:59:13 +0200
 
 iftop (0.17-17) experimental; urgency=low
 

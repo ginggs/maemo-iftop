@@ -82,11 +82,6 @@ static void finish(int sig) {
 
 
 
-<<<<<<< HEAD
-/* Only need ethernet (plus optional 4 byte VLAN) and IP headers (48) + first 2 bytes of tcp/udp header */
-/* Increase with a further 20 to account for IPv6 header length.  */
-#define CAPTURE_LENGTH 92
-=======
 /* Only need ethernet (plus optional 4 byte VLAN) and IP headers (48) + first 2
  * bytes of tcp/udp header */
 /* Increase with a further 20 to account for IPv6 header length.  */
@@ -95,7 +90,6 @@ static void finish(int sig) {
  * the radiotap payload */
 /*#define CAPTURE_LENGTH 92 */
 #define CAPTURE_LENGTH 256
->>>>>>> upstream/1.0_pre2
 
 void init_history() {
     history = addr_hash_create();
@@ -212,7 +206,6 @@ void assign_addr_pair(addr_pair* ap, struct ip* iptr, int flip) {
   else if (IP_V(iptr) == 6) {
     /* IPv6 packet seen. */
     struct ip6_hdr *ip6tr = (struct ip6_hdr *) iptr;
-<<<<<<< HEAD
 
     ap->af = AF_INET6;
 
@@ -223,18 +216,6 @@ void assign_addr_pair(addr_pair* ap, struct ip* iptr, int flip) {
       dst_port = ntohs(thdr->th_dport);
     }
 
-=======
-
-    ap->af = AF_INET6;
-
-    if( (ip6tr->ip6_nxt == IPPROTO_TCP) || (ip6tr->ip6_nxt == IPPROTO_UDP) ) {
-      struct tcphdr *thdr = ((void *) ip6tr) + 40;
-
-      src_port = ntohs(thdr->th_sport);
-      dst_port = ntohs(thdr->th_dport);
-    }
-
->>>>>>> upstream/1.0_pre2
     if(flip == 0) {
       memcpy(&ap->src6, &ip6tr->ip6_src, sizeof(ap->src6));
       ap->src_port = src_port;
@@ -264,15 +245,9 @@ static void handle_ip_packet(struct ip* iptr, int hw_dir)
     struct in6_addr scribsrc;   /* Scratch pad. */
     /* Reinterpret packet type. */
     struct ip6_hdr* ip6tr = (struct ip6_hdr *) iptr;
-<<<<<<< HEAD
 
     memset(&ap, '\0', sizeof(ap));
 
-=======
-
-    memset(&ap, '\0', sizeof(ap));
-
->>>>>>> upstream/1.0_pre2
     if( (IP_V(iptr) ==4 && options.netfilter == 0)
             || (IP_V(iptr) == 6 && options.netfilter6 == 0) ) { 
         /*
@@ -292,8 +267,6 @@ static void handle_ip_packet(struct ip* iptr, int hw_dir)
          * layer
          */
         else if((IP_V(iptr) == 4) && have_ip_addr && ip_addr_match(iptr->ip_src)) {
-<<<<<<< HEAD
-=======
             /* outgoing */
             assign_addr_pair(&ap, iptr, 0);
             direction = 1;
@@ -304,24 +277,10 @@ static void handle_ip_packet(struct ip* iptr, int hw_dir)
             direction = 0;
         }
         else if((IP_V(iptr) == 6) && have_ip6_addr && ip6_addr_match(&ip6tr->ip6_src)) {
->>>>>>> upstream/1.0_pre2
             /* outgoing */
             assign_addr_pair(&ap, iptr, 0);
             direction = 1;
         }
-<<<<<<< HEAD
-        else if((IP_V(iptr) == 4) && have_ip_addr && ip_addr_match(iptr->ip_dst)) {
-            /* incoming */
-            assign_addr_pair(&ap, iptr, 1);
-            direction = 0;
-        }
-        else if((IP_V(iptr) == 6) && have_ip6_addr && ip6_addr_match(&ip6tr->ip6_src)) {
-            /* outgoing */
-            assign_addr_pair(&ap, iptr, 0);
-            direction = 1;
-        }
-=======
->>>>>>> upstream/1.0_pre2
         else if((IP_V(iptr) == 6) && have_ip6_addr && ip6_addr_match(&ip6tr->ip6_dst)) {
             /* incoming */
             assign_addr_pair(&ap, iptr, 1);
@@ -376,19 +335,11 @@ static void handle_ip_packet(struct ip* iptr, int hw_dir)
         /* First reduce the participating addresses using the netfilter prefix.
          * We need scratch pads to do this.
          */
-<<<<<<< HEAD
-        for (j=0; j < 4; ++j) {
-            scribdst.s6_addr32[j] = ip6tr->ip6_dst.s6_addr32[j]
-                                        & options.netfilter6mask.s6_addr32[j];
-            scribsrc.s6_addr32[j] = ip6tr->ip6_src.s6_addr32[j]
-                                        & options.netfilter6mask.s6_addr32[j];
-=======
         for (j=0; j < 16; ++j) {
             scribdst.s6_addr[j] = ip6tr->ip6_dst.s6_addr[j]
                                         & options.netfilter6mask.s6_addr[j];
             scribsrc.s6_addr[j] = ip6tr->ip6_src.s6_addr[j]
                                         & options.netfilter6mask.s6_addr[j];
->>>>>>> upstream/1.0_pre2
         }
 
         /* Now look for any hits. */

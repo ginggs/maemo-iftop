@@ -25,9 +25,6 @@
 
 #define RESOLVE_QUEUE_LENGTH 20
 
-<<<<<<< HEAD
-struct in6_addr resolve_queue[RESOLVE_QUEUE_LENGTH];
-=======
 struct addr_storage {
     int af;                     /* AF_INET or AF_INET6 */
     int len;                    /* sizeof(struct in_addr or in6_addr) */
@@ -40,7 +37,6 @@ struct addr_storage {
 };
 
 struct addr_storage resolve_queue[RESOLVE_QUEUE_LENGTH];
->>>>>>> upstream/1.0_pre2
 
 pthread_cond_t resolver_queue_cond;
 pthread_mutex_t resolver_queue_mutex;
@@ -70,50 +66,6 @@ extern options_t options;
  * as NetBSD break the RFC and implement it in a non-thread-safe fashion, so
  * for the moment, the configure script won't try to use it.
  */
-<<<<<<< HEAD
-char *do_resolve(struct in6_addr *addr) {
-    struct sockaddr_in sin;
-    struct sockaddr_in6 sin6;
-    char buf[NI_MAXHOST]; /* 1025 */
-    int res, af;
-    uint32_t* probe;
-
-    memset(&sin, '\0', sizeof(sin));
-    memset(&sin6, '\0', sizeof(sin6));
-
-    /* If the upper three (network byte order) uint32-parts
-     * are null, then there ought to be an IPv4 address here.
-     * Any such IPv6 would have to be 'xxxx::'. Neglectable? */
-    probe = (uint32_t *) addr;
-    af = (probe[1] || probe[2] || probe[3]) ? AF_INET6 : AF_INET;
-
-    switch (af) {
-        case AF_INET:
-            sin.sin_family = af;
-            sin.sin_port = 0;
-            memcpy(&sin.sin_addr, addr, sizeof(sin.sin_addr));
-
-            if (getnameinfo((struct sockaddr*)&sin, sizeof sin,
-                            buf, sizeof buf, NULL, 0, NI_NAMEREQD) == 0)
-                return xstrdup(buf);
-            else
-                return NULL;
-            break;
-        case AF_INET6:
-            sin6.sin6_family = af;
-            sin6.sin6_port = 0;
-            memcpy(&sin6.sin6_addr, addr, sizeof(sin6.sin6_addr));
-
-            if (getnameinfo((struct sockaddr*)&sin6, sizeof sin6,
-                            buf, sizeof buf, NULL, 0, NI_NAMEREQD) == 0)
-                return xstrdup(buf);
-            else
-                return NULL;
-            break;
-        default:
-            return NULL;
-    }
-=======
 char *do_resolve(struct addr_storage *addr) {
     struct sockaddr_in sin;
     struct sockaddr_in6 sin6;
@@ -145,7 +97,6 @@ char *do_resolve(struct addr_storage *addr) {
         return xstrdup(buf);
     else
         return NULL;
->>>>>>> upstream/1.0_pre2
 }
 
 #elif defined(USE_GETHOSTBYADDR_R)
@@ -461,11 +412,7 @@ void resolver_worker(void* ptr) {
         /* Keep resolving until the queue is empty */
         while(head != tail) {
             char * hostname;
-<<<<<<< HEAD
-            struct in6_addr addr = resolve_queue[tail];
-=======
             struct addr_storage addr = resolve_queue[tail];
->>>>>>> upstream/1.0_pre2
 
             /* mutex always locked at this point */
 
@@ -516,11 +463,7 @@ void resolver_initialise() {
 
 }
 
-<<<<<<< HEAD
-void resolve(int af, struct in6_addr* addr, char* result, int buflen) {
-=======
 void resolve(int af, void* addr, char* result, int buflen) {
->>>>>>> upstream/1.0_pre2
     char* hostname;
     union {
 	char **ch_pp;
@@ -547,27 +490,16 @@ void resolve(int af, void* addr, char* result, int buflen) {
         }
         else {
             hostname = xmalloc(INET6_ADDRSTRLEN);
-<<<<<<< HEAD
-            inet_ntop(af, addr, hostname, INET6_ADDRSTRLEN);
-            hash_insert(ns_hash, addr, hostname);
-=======
             inet_ntop(af, &raddr->addr, hostname, INET6_ADDRSTRLEN);
 
             hash_insert(ns_hash, raddr, hostname);
->>>>>>> upstream/1.0_pre2
 
             if(((head + 1) % RESOLVE_QUEUE_LENGTH) == tail) {
                 /* queue full */
             }
-<<<<<<< HEAD
-            else if((af == AF_INET6)
-                        && (IN6_IS_ADDR_LINKLOCAL(addr)
-                            || IN6_IS_ADDR_SITELOCAL(addr))) {
-=======
             else if ((af == AF_INET6)
                      && (IN6_IS_ADDR_LINKLOCAL(&raddr->as_addr6)
                          || IN6_IS_ADDR_SITELOCAL(&raddr->as_addr6))) {
->>>>>>> upstream/1.0_pre2
                 /* Link-local and site-local stay numerical. */
             }
             else {
