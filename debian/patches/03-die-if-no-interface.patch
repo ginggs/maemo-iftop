@@ -1,0 +1,27 @@
+--- a/options.c
++++ b/options.c
+@@ -122,7 +122,7 @@
+      * is up and is not lo or dummy*. */
+     options.interface = get_first_interface();
+     if (!options.interface)
+-        options.interface = "eth0";
++        options.interface = "none";
+ 
+     options.filtercode = NULL;
+     options.netfilter = 0;
+--- a/iftop.c
++++ b/iftop.c
+@@ -774,6 +774,13 @@
+     options_read_args(argc, argv);
+     /* If a config was explicitly specified, whinge if it can't be found */
+     read_config(options.config_file, options.config_file_specified);
++
++    /* Die if no interfaces are up and none specified */
++    if (strcmp(options.interface, "none") == 0) {
++        fprintf(stderr, "No interfaces are up\n");
++        exit(1);
++    }
++
+     options_make();
+     
+     sa.sa_handler = finish;

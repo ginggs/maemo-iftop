@@ -3,7 +3,7 @@ Section: user/network
 Priority: optional
 Maintainer: Graham Inggs <graham@nerve.org.za>
 XSBC-Original-Maintainer: Alexander Reichle-Schmehl <tolimar@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), quilt (>= 0.45-6~), autotools-dev, libncurses5-dev, libpcap0.8-dev
+Build-Depends: debhelper (>= 7), autotools-dev, libncurses5-dev, libpcap0.8-dev
 Standards-Version: 3.9.3
 Homepage: http://www.ex-parrot.com/~pdw/iftop/
 Vcs-Svn: svn://svn.debian.org/svn/collab-maint/deb-maint/iftop/trunk/
@@ -91,16 +91,3 @@ XB-Maemo-Icon-26:
  Pys7Jup3s2t8k2xU1oO6qqoYBsj/5QjyLQpDcM2D1y80ktsjBxXuh8K5UBRF
  zKt0r4rN6X9sEDMgP9aVZMPwfzFeHdu/BBgATwIODZj1b7UAAAAASUVORK5C
  YII=
-
-Package: iftop-dbg
-Section: debug
-Priority: extra
-Architecture: any
-Depends: ${misc:Depends}, iftop (= ${binary:Version})
-Description: displays bandwidth usage information on an network interface (debug)
- iftop does for network usage what top(1) does for CPU usage. It listens to
- network traffic on a named interface and displays a table of current bandwidth
- usage by pairs of hosts. Handy for answering the question "Why is my Internet
- link so slow?".
- .
- This package contains the debugging symbols.

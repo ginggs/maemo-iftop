@@ -1,2 +1,3 @@
 01-scratchbox-configure-pthreads.patch
 02-avoid-unwanted-interfaces.patch
+03-die-if-no-interface.patch
