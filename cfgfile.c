@@ -47,9 +47,9 @@ stringmap config;
 extern options_t options ;
 
 int is_cfgdirective_valid(const char *s) {
-    char **t;
-    for (t = config_directives; *t != NULL; ++t)
-        if (strcmp(s, *t) == 0) return 1;
+    int t;
+    for (t = 0; config_directives[t] != NULL; t++)
+       if (strcmp(s, config_directives[t]) == 0) return 1;
     return 0;
 }
 
@@ -233,6 +233,7 @@ void config_set_string(const char *directive, const char* s) {
 
     S = stringmap_find(config, directive);
     if (S) {
+<<<<<<< HEAD
         /* Replace any already stored string value.
 	 * The node can simply not be deleted straight off,
 	 * due to possible presence of leafs on either side. */
@@ -241,6 +242,14 @@ void config_set_string(const char *directive, const char* s) {
         S->d.v = xstrdup(s);
     } else
         stringmap_insert(config, directive, item_ptr(xstrdup(s)));
+=======
+      xfree(S->d.v);
+      S->d = item_ptr(xstrdup(s));
+    }
+    else {
+      stringmap_insert(config, directive, item_ptr(xstrdup(s)));
+    }
+>>>>>>> upstream/1.0_pre2
 }
 
 int read_config(char *file, int whinge_on_error) {

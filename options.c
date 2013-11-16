@@ -46,7 +46,8 @@ static char *bad_interface_names[] = {
             "gif",     /* psuedo-device generic tunnel interface */
             "dummy",
             "vmnet",
-            NULL        /* last entry must be NULL */
+            "wmaster", /* wmaster0 is an internal-use interface for mac80211, a Linux WiFi API. */
+            NULL       /* last entry must be NULL */
         };
 
 config_enumeration_type sort_enumeration[] = {
@@ -86,8 +87,10 @@ static int is_bad_interface_name(char *i) {
  * interface or one of the interface types listed in bad_interface_names. */
 static char *get_first_interface(void) {
     struct if_nameindex * nameindex;
+    struct ifreq ifr;
     char *i = NULL;
     int j = 0;
+    int s;
     /* Use if_nameindex(3) instead? */
 
     nameindex = if_nameindex();
@@ -95,10 +98,15 @@ static char *get_first_interface(void) {
         return NULL;
     }
 
+    s = socket(AF_INET, SOCK_DGRAM, 0); /* any sort of IP socket will do */
+
     while(nameindex[j].if_index != 0) {
         if (strcmp(nameindex[j].if_name, "lo") != 0 && !is_bad_interface_name(nameindex[j].if_name)) {
-            i = xstrdup(nameindex[j].if_name);
-            break;
+            strncpy(ifr.ifr_name, nameindex[j].if_name, sizeof(ifr.ifr_name));
+            if ((s == -1) || (ioctl(s, SIOCGIFFLAGS, &ifr) == -1) || (ifr.ifr_flags & IFF_UP)) {
+                i = xstrdup(nameindex[j].if_name);
+                break;
+            }
         }
         j++;
     }
@@ -163,7 +171,7 @@ void options_set_defaults() {
 }
 
 static void die(char *msg) {
-    fprintf(stderr, msg);
+    fprintf(stderr, "%s", msg);
     exit(1);
 }
 
@@ -241,7 +249,11 @@ static void usage(FILE *fp) {
     fprintf(fp,
 "iftop: display bandwidth usage on an interface by host\n"
 "\n"
+<<<<<<< HEAD
 "Synopsis: iftop -h | [-npblBP] [-i interface] [-f filter code]\n"
+=======
+"Synopsis: iftop -h | [-npblNBP] [-i interface] [-f filter code]\n"
+>>>>>>> upstream/1.0_pre2
 "                               [-F net/mask] [-G net6/mask6]\n"
 "\n"
 "   -h                  display this message\n"
@@ -317,7 +329,7 @@ void options_read_args(int argc, char **argv) {
                 break;
 
             case 'b':
-                config_set_string("show-bars", "true");
+                config_set_string("show-bars", "false");
                 break;
 
             case 'B':
@@ -341,6 +353,7 @@ void options_read_args(int argc, char **argv) {
                 exit(1);
         }
     }
+
 
     if (optind != argc) {
         fprintf(stderr, "iftop: found arguments following options\n");
@@ -537,6 +550,7 @@ int options_config_get_net_filter6() {
             }
             else {
                 int bl, rem;
+<<<<<<< HEAD
                 const uint32_t mm = 0xffffffff;
                 uint32_t part = mm;
 
@@ -549,6 +563,21 @@ int options_config_get_net_filter6() {
                     options.netfilter6mask.s6_addr32[bl] = htonl(part);
                 options.netfilter6 = 1;
             }
+=======
+                const uint8_t mm = 0xff;
+                uint8_t part = mm;
+
+                bl = n / 8;
+                rem = n % 8;
+                part <<= 8 - rem;
+                for (j=0; j < bl; ++j)
+                    options.netfilter6mask.s6_addr[j] = mm;
+
+                if (rem > 0)
+                    options.netfilter6mask.s6_addr[bl] = part;
+                options.netfilter6 = 1;
+              }
+>>>>>>> upstream/1.0_pre2
         }
         else {
             if (inet_pton(AF_INET6, mask, &options.netfilter6mask) != 0)
@@ -559,8 +588,13 @@ int options_config_get_net_filter6() {
             }
         }
         /* Prepare any comparison by masking the provided filtered net. */
+<<<<<<< HEAD
         for (j=0; j < 4; ++j)
             options.netfilter6net.s6_addr32[j] &= options.netfilter6mask.s6_addr32[j];
+=======
+        for (j=0; j < 16; ++j)
+            options.netfilter6net.s6_addr[j] &= options.netfilter6mask.s6_addr[j];
+>>>>>>> upstream/1.0_pre2
 
         return 1;
     }
